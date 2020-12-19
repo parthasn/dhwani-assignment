@@ -11,7 +11,6 @@ class CreditCard extends React.Component {
     
   }
   handleChange = (value, i) => {
-   
     const { length } = this.props;
     this.state.values[i] = value;
     if (value.length > 3 && i < length - 1) {
@@ -30,7 +29,6 @@ class CreditCard extends React.Component {
   };
 
   handlePaste = (e) => {
-    e.preventDefault();
     let data = e.clipboardData.getData("text")
     if(data.length > 16){
         data = data.substring(0, 16)
@@ -41,24 +39,23 @@ class CreditCard extends React.Component {
     }
     let val = []
     for(let i = 0; i < data.length; i++){
-      if(val[Math.floor(i/4)]){
-        val[Math.floor(i/4)] += data[i]
+    let index = Math.floor(i/4);
+      if(val[index]){
+        val[index] += data[i]
       }
       else{
-        val[Math.floor(i/4)] = data[i]
+        val[index] = data[i]
       }
     }
+    console.log("values", this.state.values)
     val.forEach((value, i) => {
       this.state.values[i] = value;
       this.state.elements[i].input.value = value;
-    //   if (i < this.props.length - 1 && Math.floor(data.length/4) === 0) {
-    //     this.state.elements[i + 1].input.focus();
-    //   }
-      let focusIndex = Math.floor(data.length/4);
+    });
+    let focusIndex = Math.floor(data.length/4);
       if(focusIndex >= 4)
         focusIndex = 3
       this.state.elements[focusIndex].input.focus();
-    });
     this.props.onChange(this.state.values.join(""));
   };
 
@@ -72,8 +69,7 @@ class CreditCard extends React.Component {
             ref={(n) => (this.state.elements[i] = n)}
             onChange={(v) => this.handleChange(v, i)}
             onBackspace={(e) => this.onBackspace(i, e)}
-            values = {this.values}
-            reset = {this.reset}
+            
           />
         ))}
       </div>

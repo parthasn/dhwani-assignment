@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const { loginSchema, } = require('../validation');
 
 dotenv.config();
-
+// To register
 const register = async (req, res) => {
     let err = await registerSchema.validate(req.body).catch((err) => {
         return err;
@@ -38,7 +38,7 @@ const register = async (req, res) => {
             console.log(err)
         }
 }
-
+// To Login
 const login = async (req, res) => {
     let err = await loginSchema.validate(req.body).catch((err) => {
         return err;
@@ -75,11 +75,9 @@ const login = async (req, res) => {
         return res.status(400).send(err);
     }
 };
-
+// To Logout
 const logout = (req, res) => {
     res.status(200).send({success: true, status: 200, message: "Successfully logged out"})
 }
-
-
 
 module.exports = { login, logout, register };

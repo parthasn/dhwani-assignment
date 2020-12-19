@@ -27,7 +27,7 @@ mongoose.connect('mongodb://localhost/dhwani-database', {useNewUrlParser: true, 
     if(err){
         console.log("Connection to database failed")
     }
-    
+    // Adding users data to database
     if(User.collection.countDocuments((err, count) => {
         if (!err && count === 0) {
             // It's empty
@@ -38,6 +38,7 @@ mongoose.connect('mongodb://localhost/dhwani-database', {useNewUrlParser: true, 
         }); 
         }
     }));
+    // Adding state data to database
     if(State.collection.countDocuments((err, count) => {
         if (!err && count === 0) {
             // It's empty
@@ -48,6 +49,7 @@ mongoose.connect('mongodb://localhost/dhwani-database', {useNewUrlParser: true, 
         }); 
         }
     }));
+    // Adding district data to database
     if(District.collection.countDocuments((err, count) => {
         if (!err && count === 0) {
             // It's empty
@@ -58,6 +60,7 @@ mongoose.connect('mongodb://localhost/dhwani-database', {useNewUrlParser: true, 
         }); 
         }
     }));
+    // Adding child profile data to database
     if(ChildProfile.collection.countDocuments((err, count) => {
         if (!err && count === 0) {
             // It's empty
