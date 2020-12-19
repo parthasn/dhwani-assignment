@@ -1,61 +1,51 @@
 import React from "react";
-import CreditCardItem from "./CreditCardItem";
 
-class CreditCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.values = new Array(props.length).fill("");
-    this.elements = [];
-  }
-  handleChange = (value, i) => {
-    const { length } = this.props;
-    console.log("change", i, value, length);
-    this.values[i] = value;
-    if (value.length > 0 && i < length - 1) {
-      console.log("changing", i + 1);
-      this.elements[i + 1].input.focus();
+const style = {
+  padding: 10,
+  width: 50,
+  fontSize: 16,
+  margin: 5,
+  textAlign: "center"
+};
+class CreditCardItem extends React.Component {
+    constructor(props){
+      super(props)
+        this.state = {
+          value: this.props.values || ''
+        }
+      
     }
-    this.props.onChange(this.values.join(""));
-  };
-  onBackspace = (index, e) => {
-    console.log("backspace");
-    if (index > 0) {
-      this.elements[index - 1].input.focus();
-    }
-    this.props.onChange(this.values.join(""));
-  };
-  handlePaste = (e) => {
+  handleKeyUp = (e) => {
     e.preventDefault();
-    let val = e.clipboardData
-      .getData("Text")
-      .split("")
-      .filter((_, i) => i < this.props.length);
-
-    val.forEach((value, i) => {
-      this.values[i] = value;
-      this.elements[i].input.value = value;
-      if (i < this.props.length - 1) {
-        this.elements[i + 1].input.focus();
-      }
-    });
-    this.props.onChange(this.values.join(""));
+    if (e.keyCode === 8 && this.input.value === "") {
+      this.props.onBackspace(e);
+    } else {
+      this.props.onChange(e.target.value);
+    }
   };
+  handleChange = (e) => {
+    e.preventDefault()
+    const re = /^[0-9\b]+$/;
+      if (e.target.value === '' || re.test(e.target.value)) {
+         this.setState({value: e.target.value})
+      }
+  }
   render() {
-    console.log(this.props.isTrue);
+    
+    
     return (
-      <div onPaste={this.handlePaste}>
-        {this.values.map((item, i) => (
-          <CreditCardItem
-            isTrue={this.props.isTrue}
-            key={i}
-            ref={(n) => (this.elements[i] = n)}
-            onChange={(v) => this.handleChange(v, i)}
-            onBackspace={(e) => this.onBackspace(i, e)}
-          />
-        ))}
-      </div>
+      <>
+        <input
+        value = {this.state.value}
+        ref={(n) => (this.input = n)}
+        maxLength={4}
+        onKeyUp={this.handleKeyUp}
+        onChange = {this.handleChange}
+        style={style}
+      />
+      </>
     );
   }
 }
 
-export default CreditCard;
+export default CreditCardItem;

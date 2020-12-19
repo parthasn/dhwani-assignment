@@ -1,7 +1,4 @@
 const District = require('../models/District');
-let districtsArr = require('../districts')
-
-
 
 const getDistricts = async (req, res) => {
     const { state_id }= req.query
@@ -20,9 +17,7 @@ const addDistrict = async (req, res) => {
     .then((districts) => {
         console.log("test districts",districts);
         if(districts.length === 0){
-            const newDistrict = new District({ _id, state_id, district_name });  
-            districtsArr.push(newDistrict)
-            console.log(districtsArr)
+            const newDistrict = new District({ _id, state_id, district_name });
             newDistrict
                 .save()
                 .then(() => res.json({success: true, status: 200, message: "District Added Successfully"}))

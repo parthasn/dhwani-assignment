@@ -2,12 +2,12 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const { loginSchema } = require('../validation');
+const { loginSchema, } = require('../validation');
 
 dotenv.config();
 
 const register = async (req, res) => {
-    let err = await loginSchema.validate(req.body).catch((err) => {
+    let err = await registerSchema.validate(req.body).catch((err) => {
         return err;
     });
 
